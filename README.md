@@ -45,16 +45,139 @@ A smart agriculture enterprise operates connected greenhouses and automated whea
 
 ### 1. Use Case Diagram
 Models external actors (sensors, supervisors, warehouse operators) and interactions with the MQTT broker and core system logic.
-![Use Case Diagram](diagrams/use-case-diagram.png)
+<img width="1430" height="1034" alt="Picture1" src="https://github.com/user-attachments/assets/c6505e4d-d421-4851-a289-c30b5746fb40" />
+
 
 ### 2. Class Diagram
 Defines the object structure, attributes, data types, and inter-class relationships.
-![Class Diagram](diagrams/class-diagram.png)
+
+```mermaid
+classDiagram
+    class TemperatureSensor {
+        -int temperatureSensorID
+        -int temperatureValue
+        -varchar sensorModel
+        -int measurementTime
+        +initiateSensing()
+        +monitorTemperature()
+    }
+
+    class HumiditySensor {
+        -int humiditySensorID
+        -int humidityValue
+        -varchar sensorModel
+        -int measurementTime
+        +initiateSensing()
+        +testHumidity()
+    }
+
+    class SolarRadiationSensor {
+        -int solarRadiationSensorID
+        -int shortWaveRadiationValue
+        -int heatIntensityValue
+        -varchar sensorModel
+        -int measurementTime
+        +initiateSensing()
+        +measureShortWaveRadiation()
+        +measureLightAndHeatIntensity()
+    }
+
+    class PlantEyeCamera {
+        -int cameraID
+        -varchar diseaseType
+        -varchar plantGrowthLevel
+        +startCapturingPlantImages()
+        +requestPlantImages()
+    }
+
+    class PiMicrocontroller {
+        -int microcontrollerID
+        -varchar model
+        -int batteryLevel
+        +gatherSensorReadings()
+        +getDataInsights()
+        +detectAnomaly()
+        +generateReport()
+        +requestReport()
+        +sendPlantImages()
+        +detectCropDiseases()
+        +checkPlantGrowth()
+    }
+
+    class Supervisor {
+        -int supervisorID
+        -varchar name
+        -varchar email
+        +sendAlert()
+        +sendReport()
+        +plantsNeedCultivation()
+    }
+
+    class WarehouseManager {
+        -int managerID
+        -varchar name
+        -varchar email
+        +monitorIncomingStock()
+        +getReadings()
+        +receiveWheatQuantities()
+        +sendWarehouseReport()
+    }
+
+    class WarehouseEmployee {
+        -int employeeID
+        -varchar name
+        -varchar email
+        -varchar address
+        +receiveWheatBagDates()
+    }
+
+    class WarehouseInventory {
+        -int tagID
+        -date dateOfCultivation
+        -int quantity
+        -varchar wheatBagLocation
+        +notifyWarehouseAboutIncomingStock()
+        +noIncomingStock()
+        +addToStock()
+        +releaseOldWheat()
+    }
+
+    class RfidReader {
+        -int readerID
+        -int readerRange
+        +readRfidTag()
+        +requestWheatBagDates()
+    }
+
+    class WarehouseReport {
+        -varchar spaceEfficiency
+        -int wheatBagReleases
+        -int inputsAndOutputs
+        -varchar rfidTracking
+        +requestWarehouseReport()
+    }
+
+    TemperatureSensor --> PiMicrocontroller : send readings
+    HumiditySensor --> PiMicrocontroller : send readings
+    SolarRadiationSensor --> PiMicrocontroller : send readings
+    PlantEyeCamera --> PiMicrocontroller : send readings
+    PiMicrocontroller --> Supervisor : send alert
+    Supervisor --> WarehouseManager : notify about incoming stock
+    WarehouseManager --> WarehouseInventory : add to stock
+    WarehouseEmployee --> WarehouseInventory : release wheat
+    WarehouseEmployee --> RfidReader : track wheat bags through
+    WarehouseInventory --> WarehouseReport : contributes in
+    RfidReader --> WarehouseReport : contributes in
+    WarehouseManager --> WarehouseReport : request
+```
+
 
 ### 3. Sequence Diagrams
 Illustrates the temporal exchange of messages between microcontrollers, sensors, cloud services, and actors:
 * **Greenhouse Monitoring & Anomaly Alerting:**
-  ![Sequence Diagram - Sensor](diagrams/sequence-diagram-temp.png)
+  <img width="522" height="432" alt="Picture4" src="https://github.com/user-attachments/assets/8991ffba-7f00-4c68-a654-76b070c7e725" />
+<img width="610" height="465" alt="Picture3" src="https://github.com/user-attachments/assets/b883240c-4e0e-408a-805b-d606aec6f914" />
+
 * **Plant Health Analysis & Cultivation Notification:**
   ![Sequence Diagram - Crop](diagrams/sequence-diagram-crop.png)
 * **RFID Warehouse Ingestion & FIFO Stock Release:**
