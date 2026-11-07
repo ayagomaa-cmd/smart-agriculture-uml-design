@@ -16,7 +16,31 @@ A smart agriculture enterprise operates connected greenhouses and automated whea
 * **Communication & Cloud:** MQTT brokers connecting microcontrollers with AWS cloud storage and operational dashboards.
 
 ---
+---
 
+## 📋 System Requirements
+
+### Environmental Monitoring Requirements
+* **FR1:** The system allows the temperature sensor to continuously monitor greenhouse temperature.
+* **FR2:** The system allows the humidity sensor to continuously monitor greenhouse humidity.
+* **FR3:** The system allows the solar radiation sensor to measure shortwave radiation levels.
+* **FR4:** The system allows the solar radiation sensor to measure light and heat intensity.
+* **FR5:** The system allows the PlantEye camera to capture images of wheat crops for health analysis.
+
+### Data Processing & Alerting Requirements
+* **FR6:** The system allows the PI microcontroller to gather readings from all sensors and cameras.
+* **FR7:** The system analyzes collected environmental and crop data in real time.
+* **FR8:** The system detects environmental anomalies based on predefined thresholds.
+* **FR9:** The system detects crop diseases and pest indications using image analysis.
+* **FR10:** The system evaluates plant growth status and determines cultivation needs.
+* **FR11:** The system sends automated alerts to the supervisor when abnormal conditions are detected.
+
+### RFID & Warehouse Management Requirements
+* **FR12:** The system allows the supervisor to notify warehouse inventory about incoming wheat stock.
+* **FR13:** The system allows RFID readers to scan wheat bag tags during storage.
+* **FR14:** The system allows the warehouse manager to add incoming stock and track storage dates.
+* **FR15:** The system identifies older wheat batches and guides release according to the FIFO method.
+* **FR16:** The system generates automated warehouse and inventory reports.
 ## 📊 System Diagrams & Documentation
 
 ### 1. Use Case Diagram
